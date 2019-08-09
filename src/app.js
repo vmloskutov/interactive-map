@@ -138,7 +138,7 @@ let description = document.querySelector(".description");
 let enabled = document.querySelectorAll(".enabled");
 enabled.forEach(function(item) {
   item.addEventListener("mouseover", function () {
-    window.addEventListener('mousemove', function(e){
+    item.addEventListener('mousemove', function(e){
       description.style.left = e.pageX + "px";
       let y = e.pageY - 70
       description.style.top = y + "px";
