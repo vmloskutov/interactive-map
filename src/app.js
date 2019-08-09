@@ -90,8 +90,6 @@ let idArr = [
   ["RU-TUL",  "Тульская область"]
 ];
 
-  console.log(idArr);
-
 let oblast = document.querySelectorAll("path");
 window.onload = function(){
   oblast.forEach(function(item) {
@@ -111,9 +109,14 @@ let description = document.querySelector(".description");
 let enabled = document.querySelectorAll(".enabled");
 enabled.forEach(function(item) {
   item.addEventListener("mouseover", function() {
-  this.classList.add("heyo");
   description.classList.add('active');
-  description.innerHTML = this.getAttribute("id");
+  let area;
+  for (let i = 0; i < idArr.length; i++) {
+    if (this.getAttribute("id") === idArr[i][0]) {
+      area = idArr[i][1];
+    }
+  }
+  description.innerHTML = area;
   });
   item.addEventListener("mouseout", function() {
     description.classList.remove("active");
