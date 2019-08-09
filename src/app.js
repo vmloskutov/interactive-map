@@ -97,8 +97,32 @@ window.onload = function(){
     item.style.fill= "#dde1e6";
   });
   for (let i = 0; i < idArr.length; i++) {
-    dropdown.insertAdjacentHTML('beforeend', `<li class=""><a href="#">${idArr[i][1]}<hr></a></li>`);
+    dropdown.insertAdjacentHTML('beforeend', `<li class=""><a href="#" class="list">${idArr[i][1]}<hr></a></li>`);
   }
+  let list = document.querySelectorAll(".list");
+  list.forEach( function(item) {
+    item.onmouseover = function () {
+      for (let i = 0; i < idArr.length; i++) {
+        if (this.innerHTML.slice(0, -4) === idArr[i][1]) {
+          let selected = document.getElementById(idArr[i][0]);
+          description.classList.add('active');
+          description.style.left = selected.getBoundingClientRect().left;
+          description.style.top = selected.getBoundingClientRect().top;
+          description.innerHTML = this.innerHTML.slice(0, -4);
+          selected.style.fill="#ffffff"
+        }
+      }
+    };
+    item.onmouseout = function() {
+      for (let i = 0; i < idArr.length; i++) {
+        if (this.innerHTML.slice(0, -4) === idArr[i][1]) {
+          let selected = document.getElementById(idArr[i][0]);
+          description.classList.remove('active');
+          selected.style.fill="#dde1e6"
+        }
+    }
+  };
+  });
 }
 oblast.forEach(function(item) {
   item.addEventListener("mouseover", function(event) {
@@ -112,23 +136,22 @@ oblast.forEach(function(item) {
 let description = document.querySelector(".description");
 let enabled = document.querySelectorAll(".enabled");
 enabled.forEach(function(item) {
-  item.addEventListener("mouseover", function() {
-  description.classList.add('active');
-  let area;
-  for (let i = 0; i < idArr.length; i++) {
-    if (this.getAttribute("id") === idArr[i][0]) {
-      area = idArr[i][1];
+  item.addEventListener("mouseover", function () {
+    window.addEventListener('mousemove', function(e){
+      description.style.left = e.pageX + "px";
+      let y = e.pageY - 70
+      description.style.top = y + "px";
+    });
+    description.classList.add('active');
+    let area;
+    for (let i = 0; i < idArr.length; i++) {
+      if (this.getAttribute("id") === idArr[i][0]) {
+        area = idArr[i][1];
+      }
     }
-  }
-  description.innerHTML = area;
+    description.innerHTML = area;
   });
   item.addEventListener("mouseout", function() {
     description.classList.remove("active");
   });
-});
-
-window.addEventListener('mousemove', function(e){
-  description.style.left = e.pageX + "px";
-  let y = e.pageY - 70
-  description.style.top = y + "px";
 });
