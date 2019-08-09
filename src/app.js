@@ -106,9 +106,10 @@ window.onload = function(){
         if (this.innerHTML.slice(0, -4) === idArr[i][1]) {
           let selected = document.getElementById(idArr[i][0]);
           description.classList.add('active');
-          description.style.left = selected.getBoundingClientRect().left + "px";
-          description.style.top = selected.getBoundingClientRect().top + "px";
-          console.log(description.style.left);
+          let centerX = selected.getBoundingClientRect().left + selected.getBoundingClientRect().width / 3;
+          let centerY = selected.getBoundingClientRect().top + selected.getBoundingClientRect().height / 2;
+          description.style.left = centerX + "px";
+          description.style.top = centerY + "px";
           description.innerHTML = this.innerHTML.slice(0, -4);
           selected.style.fill="#ffffff"
         }
