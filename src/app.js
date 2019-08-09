@@ -106,8 +106,9 @@ window.onload = function(){
         if (this.innerHTML.slice(0, -4) === idArr[i][1]) {
           let selected = document.getElementById(idArr[i][0]);
           description.classList.add('active');
-          description.style.left = selected.getBoundingClientRect().left;
-          description.style.top = selected.getBoundingClientRect().top;
+          description.style.left = selected.getBoundingClientRect().left + "px";
+          description.style.top = selected.getBoundingClientRect().top + "px";
+          console.log(description.style.left);
           description.innerHTML = this.innerHTML.slice(0, -4);
           selected.style.fill="#ffffff"
         }
