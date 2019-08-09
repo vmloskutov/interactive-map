@@ -1,6 +1,7 @@
 import './app.scss';
 import 'bootstrap';
 
+let dropdown = document.getElementById("dropdown");
 let idArr = [
   ["RU-MOW",  "Москва"],
   ["RU-CHE", "Челябинская область"],
@@ -95,6 +96,9 @@ window.onload = function(){
   oblast.forEach(function(item) {
     item.style.fill= "#dde1e6";
   });
+  for (let i = 0; i < idArr.length; i++) {
+    dropdown.insertAdjacentHTML('beforeend', `<li class=""><a href="#">${idArr[i][1]}<hr></a></li>`);
+  }
 }
 oblast.forEach(function(item) {
   item.addEventListener("mouseover", function(event) {
