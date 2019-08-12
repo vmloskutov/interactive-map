@@ -106,12 +106,12 @@ window.onload = function(){
         if (this.innerHTML.slice(0, -4) === idArr[i][1]) {
           let selected = document.getElementById(idArr[i][0]);
           description.classList.add('active');
-          let centerX = selected.getBoundingClientRect().left + selected.getBoundingClientRect().width / 3;
-          let centerY = selected.getBoundingClientRect().top + selected.getBoundingClientRect().height / 2;
-          description.style.left = centerX + "px";
-          description.style.top = centerY + "px";
           description.innerHTML = this.innerHTML.slice(0, -4);
           selected.style.fill="#ffffff"
+          let centerX = selected.getBoundingClientRect().left + selected.getBoundingClientRect().width / 2 - description.getBoundingClientRect().width / 2;
+          let centerY = selected.getBoundingClientRect().top - description.getBoundingClientRect().height - 10;
+          description.style.left = centerX + "px";
+          description.style.top = centerY + "px";
         }
       }
     };

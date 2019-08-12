@@ -7137,4 +7137,11 @@ path {
     display: block; }
   .description:after {
     content: '';
-    position: absolute; }
+    position: absolute;
+    top: 49px;
+    left: 45%;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #ffffff; }
