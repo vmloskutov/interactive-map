@@ -90,41 +90,21 @@ let idArr = [
   ["RU-STA",  "Ставропольский край"],
   ["RU-TUL",  "Тульская область"]
 ];
-
+let idArrFed = [["Central", "Центральный"], ["Northwestern", "Северо-Западный"], ["Southern-1", "Южный"], ["path5292", "Северо-Кавказский"], ["Volga", "Приволжский"], ["Urals", "Уральский"], ["Siberia", "Сибирский"], ["Far_Eastern", "Дальневосточный"]];
 let oblast = document.querySelectorAll("path");
+let description = document.querySelector(".description");
+let enabled = document.querySelectorAll(".enabled");
+let choise = document.querySelector(".choise");
+let regions = document.querySelector(".regions");
+let federal = document.querySelector(".federal");
+let radio = document.querySelectorAll("input[name=radio]");
+
 window.onload = function(){
   oblast.forEach(function(item) {
     item.style.fill= "#dde1e6";
   });
-  for (let i = 0; i < idArr.length; i++) {
-    dropdown.insertAdjacentHTML('beforeend', `<li class=""><a href="#" class="list">${idArr[i][1]}<hr></a></li>`);
-  }
-  let list = document.querySelectorAll(".list");
-  list.forEach( function(item) {
-    item.onmouseover = function () {
-      for (let i = 0; i < idArr.length; i++) {
-        if (this.innerHTML.slice(0, -4) === idArr[i][1]) {
-          let selected = document.getElementById(idArr[i][0]);
-          description.classList.add('active');
-          description.innerHTML = this.innerHTML.slice(0, -4);
-          selected.style.fill="#ffffff"
-          let centerX = selected.getBoundingClientRect().left + selected.getBoundingClientRect().width / 2 - description.getBoundingClientRect().width / 2;
-          let centerY = selected.getBoundingClientRect().top - description.getBoundingClientRect().height - 10;
-          description.style.left = centerX + "px";
-          description.style.top = centerY + "px";
-        }
-      }
-    };
-    item.onmouseout = function() {
-      for (let i = 0; i < idArr.length; i++) {
-        if (this.innerHTML.slice(0, -4) === idArr[i][1]) {
-          let selected = document.getElementById(idArr[i][0]);
-          description.classList.remove('active');
-          selected.style.fill="#dde1e6"
-        }
-    }
-  };
-  });
+  fillDropdownReg();
+  makeListHover(idArr);
 }
 oblast.forEach(function(item) {
   item.addEventListener("mouseover", function(event) {
@@ -135,8 +115,7 @@ oblast.forEach(function(item) {
   });
 });
 
-let description = document.querySelector(".description");
-let enabled = document.querySelectorAll(".enabled");
+
 enabled.forEach(function(item) {
   item.addEventListener("mouseover", function () {
     item.addEventListener('mousemove', function(e){
@@ -159,10 +138,7 @@ enabled.forEach(function(item) {
   });
 });
 
-let choise = document.querySelector(".choise");
-let regions = document.querySelector(".regions");
-let federal = document.querySelector(".federal");
-let radio = document.querySelectorAll("input[name=radio]");
+
 radio.forEach(function(item){
   item.addEventListener( 'change', function() {
       if(this.checked) {
@@ -170,11 +146,15 @@ radio.forEach(function(item){
           regions.style.display = "block";
           federal.style.display = "none";
           choise.innerHTML = "Выбрать регион";
+          fillDropdownReg();
         }
         if (this.value === "1") {
           federal.style.display = "block";
           regions.style.display = "none";
           choise.innerHTML = "Выбрать округ";
+          fillDropdownFed();
+          makeListHover(idArrFed);
+          mouseFollow(idArrFed);
 
         }
         if (this.value === "2") {
@@ -185,3 +165,65 @@ radio.forEach(function(item){
       }
     });
 });
+
+function fillDropdownFed() {
+  dropdown.innerHTML = "";
+  for (let i = 0; i < idArrFed.length; i++) {
+    dropdown.insertAdjacentHTML('beforeend', `<li class=""><a href="#" class="list">${idArrFed[i][1]}<hr></a></li>`);
+  };
+}
+
+function fillDropdownReg() {
+  dropdown.innerHTML = "";
+  for (let i = 0; i < idArr.length; i++) {
+    dropdown.insertAdjacentHTML('beforeend', `<li class=""><a href="#" class="list">${idArr[i][1]}<hr></a></li>`);
+  }
+}
+
+function makeListHover(arr) {
+  let list = document.querySelectorAll(".list");
+  list.forEach( function(item) {
+    item.onmouseover = function () {
+      for (let i = 0; i < arr.length; i++) {
+        if (this.innerHTML.slice(0, -4) === arr[i][1]) {
+          let selected = document.getElementById(arr[i][0]);
+          description.classList.add('active');
+          description.innerHTML = this.innerHTML.slice(0, -4);
+          selected.style.fill="#ffffff"
+          let centerX = selected.getBoundingClientRect().left + selected.getBoundingClientRect().width / 2 - description.getBoundingClientRect().width / 2;
+          let centerY = selected.getBoundingClientRect().top - description.getBoundingClientRect().height - 10;
+          description.style.left = centerX + "px";
+          description.style.top = centerY + "px";
+        }
+      }
+    };
+    item.onmouseout = function() {
+      for (let i = 0; i < arr.length; i++) {
+        if (this.innerHTML.slice(0, -4) === arr[i][1]) {
+          let selected = document.getElementById(arr[i][0]);
+          description.classList.remove('active');
+          selected.style.fill="#dde1e6"
+        }
+    }
+  };
+  });
+}
+
+function mouseFollow(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    let area = document.getElementById(arr[i][0]);
+    area.addEventListener("mouseover", function () {
+      area.addEventListener('mousemove', function(e){
+        let x = e.pageX - description.getBoundingClientRect().width / 2;
+        description.style.left = x + "px";
+        let y = e.pageY - 70
+        description.style.top = y + "px";
+      });
+      description.classList.add('active');
+      description.innerHTML = arr[i][1];
+    });
+    area.addEventListener("mouseout", function() {
+      description.classList.remove("active");
+    });
+  };
+}
