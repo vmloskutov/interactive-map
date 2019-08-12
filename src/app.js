@@ -140,7 +140,8 @@ let enabled = document.querySelectorAll(".enabled");
 enabled.forEach(function(item) {
   item.addEventListener("mouseover", function () {
     item.addEventListener('mousemove', function(e){
-      description.style.left = e.pageX + "px";
+      let x = e.pageX - description.getBoundingClientRect().width / 2;
+      description.style.left = x + "px";
       let y = e.pageY - 70
       description.style.top = y + "px";
     });
