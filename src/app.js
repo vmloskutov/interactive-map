@@ -105,6 +105,7 @@ window.onload = function(){
   });
   fillDropdownReg();
   makeListHover(idArr);
+  mouseFollow(idArr);
 }
 oblast.forEach(function(item) {
   item.addEventListener("mouseover", function(event) {
@@ -115,30 +116,6 @@ oblast.forEach(function(item) {
   });
 });
 
-
-enabled.forEach(function(item) {
-  item.addEventListener("mouseover", function () {
-    item.addEventListener('mousemove', function(e){
-      let x = e.pageX - description.getBoundingClientRect().width / 2;
-      description.style.left = x + "px";
-      let y = e.pageY - 70
-      description.style.top = y + "px";
-    });
-    description.classList.add('active');
-    let area;
-    for (let i = 0; i < idArr.length; i++) {
-      if (this.getAttribute("id") === idArr[i][0]) {
-        area = idArr[i][1];
-      }
-    }
-    description.innerHTML = area;
-  });
-  item.addEventListener("mouseout", function() {
-    description.classList.remove("active");
-  });
-});
-
-
 radio.forEach(function(item){
   item.addEventListener( 'change', function() {
       if(this.checked) {
@@ -147,6 +124,8 @@ radio.forEach(function(item){
           federal.style.display = "none";
           choise.innerHTML = "Выбрать регион";
           fillDropdownReg();
+          makeListHover(idArr);
+          mouseFollow(idArr);
         }
         if (this.value === "1") {
           federal.style.display = "block";
