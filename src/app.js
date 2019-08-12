@@ -158,3 +158,30 @@ enabled.forEach(function(item) {
     description.classList.remove("active");
   });
 });
+
+let choise = document.querySelector(".choise");
+let regions = document.querySelector(".regions");
+let federal = document.querySelector(".federal");
+let radio = document.querySelectorAll("input[name=radio]");
+radio.forEach(function(item){
+  item.addEventListener( 'change', function() {
+      if(this.checked) {
+        if (this.value === "0") {
+          regions.style.display = "block";
+          federal.style.display = "none";
+          choise.innerHTML = "Выбрать регион";
+        }
+        if (this.value === "1") {
+          federal.style.display = "block";
+          regions.style.display = "none";
+          choise.innerHTML = "Выбрать округ";
+
+        }
+        if (this.value === "2") {
+          regions.style.display = "none";
+          federal.style.display = "none";
+          choise.innerHTML = "Выбрать округ";
+        }
+      }
+    });
+});
